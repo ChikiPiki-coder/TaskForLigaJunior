@@ -1,0 +1,16 @@
+#
+# Build stage
+#
+FROM maven:3.6.0-jdk-11-slim AS build
+WORKDIR /home/app
+COPY src /home/app/src
+COPY pom.xml /home/app
+RUN mvn -f /home/app/pom.xml clean install
+
+#
+# Package stage
+#
+FROM bellsoft/liberica-openjdk-alpine:11
+COPY --from=build /home/app/target/TaskLigaJunior-0.0.1-SNAPSHOT.jar /usr/local/lib/TaskLigaJunior-0.0.1-SNAPSHOT.jar
+EXPOSE 8084
+ENTRYPOINT [ "java","-jar","/usr/local/lib/TaskLigaJunior-0.0.1-SNAPSHOT.jar" ]

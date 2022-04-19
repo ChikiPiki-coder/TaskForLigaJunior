@@ -1,0 +1,12 @@
+server:
+  port: 8084
+
+spring:
+  datasource:
+    url: jdbc:postgresql://db:5432/postgres
+    username: sa
+    password:
+  jpa:
+    hibernate.ddl-auto: update
+    generate-ddl: true
+    show-sql: true
